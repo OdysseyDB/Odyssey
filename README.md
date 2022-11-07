@@ -1,3 +1,7 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/bec477b7-5b93-4fc1-a4c0-289ba33e6d4d/deploy-status)](https://app.netlify.com/sites/lambent-bienenstitch-077f19/deploys)
+
+Hosted on https://odyssey-db.netlify.app
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
