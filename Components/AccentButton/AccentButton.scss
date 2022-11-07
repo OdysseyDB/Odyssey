@@ -1,0 +1,11 @@
+.AccentButtonWrapper {
+  outline: none;
+  border: none;
+  @include make-flex();
+  @include box();
+  background-color: #ff5858;
+  color: #fafafa;
+  cursor: pointer;
+  padding: 10px;
+  font-family: 'Inter', sans-serif;
+}
