@@ -1,0 +1,18 @@
+.Header {
+  @include box(100vw, 50px);
+  background-color: #323a45;
+  @include make-flex();
+
+  &__container {
+    @include box();
+    max-width: 1152px;
+    color: white;
+    @include make-flex($just: space-between, $dir: row);
+
+    &--left,
+    &--right {
+      @include box(auto);
+      @include make-flex();
+    }
+  }
+}
