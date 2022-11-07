@@ -9,10 +9,36 @@
     color: white;
     @include make-flex($just: space-between, $dir: row);
 
+    @include respondAt(1160px) {
+      padding-left: 8px;
+    }
+
     &--left,
     &--right {
       @include box(auto);
+      @include make-flex($dir: row);
+    }
+
+    &--right {
+      gap: 20px;
+    }
+  }
+
+  &__menu {
+    @include box(auto);
+    list-style: none;
+    @include make-flex($dir: row);
+    gap: 20px;
+    li {
+      font-family: "Inter";
+      @include box(auto);
       @include make-flex();
+      color: #a9a9ab;
+      cursor: pointer;
+      transition: color 0.15s ease-in-out;
+      &:hover {
+        color: white;
+      }
     }
   }
 }
