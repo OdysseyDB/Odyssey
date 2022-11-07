@@ -1,0 +1,75 @@
+.GameCard {
+  @include box(252.5px);
+  @include make-flex($dir: column, $just: flex-start, $align: flex-start);
+  background: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  padding: 13px;
+  gap: 15px;
+  position: relative;
+
+  img {
+    @include box(auto, 302px);
+    border-radius: 3px;
+  }
+
+  &__contents {
+    @include box();
+    @include make-flex($dir: column, $just: flex-start, $align: flex-start);
+    gap: 10px;
+
+    h3 {
+      font-family: "Open Sans", sans-serif;
+      font-size: 18px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    &--genres {
+      @include box();
+      @include make-flex($dir: row, $just: flex-start, $align: flex-start);
+      overflow: auto;
+
+      // Hide scrollbar
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      gap: 6px;
+      list-style: none;
+      li {
+        border-radius: 18px;
+        @include box(auto, auto);
+        border: 0.5px solid;
+        padding: 2px 10px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  &__hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 3px;
+    @include box();
+    @include make-flex();
+    background: linear-gradient(
+      135deg,
+      rgba(240, 71, 255, 0.9),
+      rgba(228, 43, 105, 0.9)
+    );
+    backdrop-filter: blur(4.5px);
+    color: #fafafa;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+
+    &--visible {
+      opacity: 1;
+    }
+  }
+}
