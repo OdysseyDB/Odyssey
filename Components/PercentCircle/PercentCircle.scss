@@ -1,0 +1,32 @@
+.PercentCircle {
+  @include box(80px, 80px);
+  &__chart {
+    display: block;
+    @include box();
+  }
+  &__bar {
+    fill: none;
+    stroke-width: 2.8;
+    stroke-linecap: round;
+    animation: progress 1s ease-out forwards;
+  }
+  &__track {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 3.8;
+  }
+  &__text {
+    fill: white;
+    color: white;
+    text-shadow: 0 1px 1px rgb(0 0 0 / 40%);
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.5em;
+    text-anchor: middle;
+  }
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}

@@ -2,6 +2,7 @@
   @include box(100vw, 50px);
   background-color: #323a45;
   @include make-flex();
+  z-index: 100;
 
   &__container {
     @include box();
