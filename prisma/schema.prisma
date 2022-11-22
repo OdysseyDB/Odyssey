@@ -11,30 +11,138 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model Notify {
-  id        Int      @id @default(autoincrement())
-  email     String   @db.VarChar(100)
-  createdAt DateTime @default(now())
+model Game {
+  id                      String       @id @unique
+  category                String       @db.VarChar(255)
+  created_at              DateTime
+  external_games          String       @db.LongText
+  first_release_date      String       @db.VarChar(255)
+  game_modes              String       @db.VarChar(255)
+  genres                  String       @db.VarChar(255)
+  involved_companies      String       @db.VarChar(255)
+  name                    String       @db.VarChar(255)
+  platforms               String       @db.VarChar(255)
+  player_perspectives     String       @db.VarChar(255)
+  release_dates           String       @db.VarChar(255)
+  screenshots             String       @db.LongText
+  similar_games           String       @db.VarChar(255)
+  slug                    String       @db.VarChar(255)
+  summary                 String       @db.LongText
+  tags                    String       @db.LongText
+  themes                  String       @db.VarChar(255)
+  updated_at              String       @db.VarChar(255)
+  url                     String       @db.VarChar(255)
+  websites                String       @db.VarChar(255)
+  game_engines            String       @db.VarChar(255)
+  age_ratings             String       @db.VarChar(255)
+  status                  String       @db.VarChar(255)
+  aggregated_rating       String       @db.VarChar(255)
+  aggregated_rating_count String       @db.VarChar(255)
+  follows                 String       @db.VarChar(255)
+  franchise               String       @db.VarChar(255)
+  franchises              String       @db.VarChar(255)
+  rating                  String       @db.VarChar(255)
+  rating_count            String       @db.VarChar(255)
+  total_rating            String       @db.VarChar(255)
+  total_rating_count      String       @db.VarChar(255)
+  videos                  String       @db.VarChar(255)
+  VideoSet                VideoData[]
+  ports                   String       @db.VarChar(255)
+  storyline               String       @db.LongText
+  version_parent          String       @db.VarChar(255)
+  version_title           String       @db.VarChar(255)
+  hypes                   String       @db.VarChar(255)
+  multiplayer_modes       String       @db.VarChar(255)
+  parent_game             String       @db.VarChar(255)
+  standalone_expansions   String       @db.VarChar(255)
+  remasters               String       @db.VarChar(255)
+  remakes                 String       @db.VarChar(255)
+  expansions              String       @db.VarChar(255)
+  expanded_games          String       @db.VarChar(255)
+  dlcs                    String       @db.LongText
+  forks                   String       @db.VarChar(255)
+  CoverImage              CoverImage[]
+  Artwork                 Artwork[]
 }
 
-model User {
-  id       String @id @default(uuid())
-  name     String @unique @db.VarChar(100)
-  email    String @unique @db.VarChar(100)
-  college  String @db.VarChar(100)
-  role     Role   @default(USER)
-  password String @default("")
+model Artwork {
+  id            String @id @unique
+  game          String @db.VarChar(100)
+  height        String @db.VarChar(100)
+  image_id      String @db.VarChar(100)
+  url           String @db.VarChar(100)
+  checksum      String @db.VarChar(100)
+  alpha_channel String @db.VarChar(100)
+  animated      String @db.VarChar(100)
+  Game          Game?  @relation(fields: [game], references: [id])
 }
 
-model Event {
-  id         String @id @default(uuid())
-  name       String @db.VarChar(100)
-  maxPlayers Int
-  minPlayers Int
+model CoverImage {
+  id                String @id @unique
+  alpha_channel     String @db.VarChar(100)
+  animated          String @db.VarChar(100)
+  game              String @db.VarChar(100)
+  height            String @db.VarChar(100)
+  image_id          String @db.VarChar(100)
+  url               String @db.VarChar(100)
+  width             String @db.VarChar(100)
+  checksum          String @db.VarChar(100)
+  game_localization String @db.VarChar(100)
+  Game              Game?  @relation(fields: [game], references: [id])
 }
 
-enum Role {
-  USER
-  ADMIN
-  ADMIN_SUPER
+model GameWebsite {
+  id       String @id @unique
+  category String @db.VarChar(100)
+  game     String @db.VarChar(100)
+  trusted  String @db.VarChar(100)
+  url      String @db.VarChar(100)
+}
+
+model Themes {
+  id         String   @id @unique
+  created_at DateTime
+  name       String   @db.VarChar(100)
+  slug       String   @db.VarChar(100)
+  updated_at DateTime
+  url        String   @db.VarChar(100)
+  checksum   String   @db.VarChar(100)
+}
+
+model VideoData {
+  id       String @id @unique
+  game     String @db.VarChar(100)
+  name     String @db.VarChar(100)
+  video_id String @db.VarChar(100)
+  checksum String @db.VarChar(100)
+  Game     Game?  @relation(fields: [game], references: [id])
+}
+
+model PlayerPerspective {
+  id         String   @id @unique
+  created_at DateTime
+  name       String   @db.VarChar(100)
+  slug       String   @db.VarChar(100)
+  updated_at DateTime
+  url        String   @db.VarChar(100)
+  checksum   String   @db.VarChar(100)
+}
+
+model GameWebsites {
+  id       String @id @unique
+  category String @db.VarChar(100)
+  game     String @db.VarChar(100)
+  trusted  String @db.VarChar(100)
+  url      String @db.LongText
+  checksum String @db.VarChar(100)
+}
+
+model Genres {
+  id         String   @id @unique
+  created_at DateTime
+  name       String   @db.VarChar(100)
+  slug       String   @db.VarChar(100)
+  updated_at DateTime
+  url        String   @db.LongText
+  checksum   String   @db.VarChar(100)
 }
