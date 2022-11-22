@@ -1,35 +1,40 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import "./GameCard.scss";
 import Link from "next/link";
 
-function GameCard({ name, id, genre, imageSrc }) {
+function GameCard({ name, id, slug, genre, imageSrc, rating }) {
   const [onHover, setOnHover] = useState(false);
   return (
-    <div
-      className="GameCard"
-      onMouseEnter={() => setOnHover(true)}
-      onMouseLeave={() => setOnHover(false)}
-    >
-      <img src={imageSrc} alt={name} />
-      <Link href={`/game/${id}`}>
-        <a
-          className={`GameCard__hover GameCard__hover--${
-            onHover ? "visible" : ""
-          }`}
-        >
-          Learn More
-        </a>
-      </Link>
-      <div className="GameCard__contents">
-        <h3>{name}</h3>
-        <ul className="GameCard__contents--genres">
-          {genre.map((genre) => (
-            <li key={genre}>{genre}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <Link href={`/game/${slug}`}>
+      <a
+        className="GameCard"
+        onMouseEnter={() => setOnHover(true)}
+        onMouseLeave={() => setOnHover(false)}
+      >
+        <div className="GameCard__imageBox">
+          <span
+            className={`GameCard__hover GameCard__hover--${
+              onHover ? "visible" : ""
+            }`}
+          >
+            Learn More
+          </span>
+          <img src={imageSrc} alt={name} loading="lazy" />
+        </div>
+        <div className="GameCard__contents">
+          <h3>{name}</h3>
+          <div className="GameCard__contents--bottom">
+            <ul className="GameCard__contents--genres">
+              {genre.map((genre, id) => (
+                <li key={id}>{genre.name}</li>
+              ))}
+              {genre.length === 0 && <i />}
+            </ul>
+            {rating && <pre>{Math.round(rating)}%</pre>}
+          </div>
+        </div>
+      </a>
+    </Link>
   );
 }
 
