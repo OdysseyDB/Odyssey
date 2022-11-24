@@ -45,7 +45,7 @@ export default function GamePage({ currentPath, gameData }) {
           </div>
           <div className="GamePage__stage--right">
             <h1 className="GamePage__stage--title">{gameData.name}</h1>
-            {/* <div className="GamePage__stage--storyline">{gameData.summary}</div> */}
+            <div className="GamePage__stage--storyline">{gameData.summary}</div>
             <PercentCircle percent={Math.round(gameData.rating)} />
           </div>
         </div>

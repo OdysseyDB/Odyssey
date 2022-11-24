@@ -37,11 +37,7 @@ export default function Home({ popularGames, genreBased }) {
       </div>
       <div className="LandingPage__genre">
         {genreBased.map((game) => (
-          <GenreBox
-            key={game.index}
-            slug={game.slug}
-            GenreType={game.name}
-          />
+          <GenreBox key={game.index} slug={game.slug} GenreType={game.name} />
         ))}
       </div>
     </div>

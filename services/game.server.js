@@ -137,7 +137,7 @@ export async function fetchGameFromSlug(slug) {
   };
 }
 
-export async function fetchGenrebySlug(slug) {
+export async function fetchGenreBySlug(slug) {
   let genres = await db.genres.findMany({
     where: {
       slug: slug,

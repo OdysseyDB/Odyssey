@@ -1,12 +1,12 @@
-import HProject from "../../Components/HProduct/HProject";
-import { fetchGenrebySlug } from "../../services/game.server";
+import HProduct from "../../Components/HProduct/HProduct";
+import { fetchGenreBySlug } from "../../services/game.server";
 import "../../styles/routes/GamePage.scss";
 
 export async function getServerSideProps(context) {
   const { genreSlug } = context.query;
 
   const genreData = JSON.parse(
-    JSON.stringify(await fetchGenrebySlug(genreSlug))
+    JSON.stringify(await fetchGenreBySlug(genreSlug))
   );
   console.log(genreData);
   return {
@@ -20,7 +20,7 @@ export async function getServerSideProps(context) {
 export default function GenrePage({ genreData }) {
   return (
     <div className="GenrePage">
-      <HProject gameData={genreData[0]}/>
+      <HProduct gameData={genreData[0]} />
     </div>
   );
 }
