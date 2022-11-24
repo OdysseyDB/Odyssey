@@ -1,7 +1,11 @@
 import db from "../lib/prisma";
 
+export async function fetchGenres() {
+  return db.genres.findMany();
+}
+
 export async function fetchGameCardData(gameIds) {
-  const game = await db.game.findMany({
+  let game = await db.game.findMany({
     where: {
       id: {
         in: gameIds,
@@ -13,15 +17,19 @@ export async function fetchGameCardData(gameIds) {
       slug: true,
       rating: true,
       themes: true,
+      summary: true,
       CoverImage: true,
     },
   });
-  // co20gb
-  const final = game.map(async (game) => {
+
+  const final = game.map(async (gameItem) => {
+    gameItem.themes =
+      gameItem.themes !== "" || gameItem.themes ? eval(gameItem.themes) : [];
+
     const theme = await db.themes.findMany({
       where: {
         id: {
-          in: eval(game.themes).map((item) => JSON.stringify(item)),
+          in: gameItem.themes.map((item) => JSON.stringify(item)),
         },
       },
       select: {
@@ -29,10 +37,10 @@ export async function fetchGameCardData(gameIds) {
         name: true,
       },
     });
-    delete game.themes;
+    delete gameItem.themes;
 
     return {
-      ...game,
+      ...gameItem,
       theme,
     };
   });
@@ -97,8 +105,8 @@ export async function fetchGameFromSlug(slug) {
     },
   });
   game = game[0];
-  game.themes  = game.themes ? eval(game.themes) : [];
-  
+  game.themes = game.themes ? eval(game.themes) : [];
+
   const theme = await db.themes.findMany({
     where: {
       id: {
@@ -127,4 +135,38 @@ export async function fetchGameFromSlug(slug) {
     theme,
     genre,
   };
+}
+
+export async function fetchGenrebySlug(slug) {
+  let genres = await db.genres.findMany({
+    where: {
+      slug: slug,
+    },
+  });
+  genres = genres[0];
+
+  let game = await db.game.findMany({
+    where: {
+      OR: [
+        {
+          genres: {
+            contains: `[${genres.id},`,
+          },
+        },
+        {
+          genres: {
+            contains: ` ${genres.id},`,
+          },
+        },
+        {
+          genres: {
+            contains: ` ${genres.id}]`,
+          },
+        },
+      ],
+    },
+    take: 10,
+  });
+
+  return await fetchGameCardData(game.map((item) => item.id));
 }
