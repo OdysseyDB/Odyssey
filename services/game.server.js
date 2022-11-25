@@ -62,6 +62,7 @@ export async function fetchGameCardData(gameIds) {
       themes: true,
       summary: true,
       CoverImage: true,
+      platforms: true,
     },
   });
 
@@ -82,8 +83,23 @@ export async function fetchGameCardData(gameIds) {
     });
     delete gameItem.themes;
 
+    gameItem.platforms =
+      gameItem.platforms !== "" || gameItem.platforms
+        ? eval(gameItem.platforms)
+        : [];
+
+    const platform = await db.platform.findMany({
+      where: {
+        id: {
+          in: gameItem.platforms.map((item) => JSON.stringify(item)),
+        },
+      },
+    });
+    delete gameItem.platforms;
+
     return {
       ...gameItem,
+      platform,
       theme,
     };
   });
@@ -223,5 +239,8 @@ export async function fetchGenreBySlug(slug) {
     take: 10,
   });
 
-  return await fetchGameCardData(game.map((item) => item.id));
+  return {
+    genre: genres,
+    games: await fetchGameCardData(game.map((item) => item.id)),
+  };
 }

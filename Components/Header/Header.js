@@ -12,8 +12,10 @@ function Header() {
         </div>
         <div className="Header__container--right">
           <ul className="Header__menu">
-            <span data-icon={String.fromCodePoint(59574)}/>
-            <li>Genre</li>
+            <span data-icon={String.fromCodePoint(59574)} />
+            <li>
+              <a href="/#genre">Genre</a>
+            </li>
             <li>Platform</li>
           </ul>
           <AccentButton isLink={true} href="#login">

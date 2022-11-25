@@ -110,7 +110,7 @@ export default function Home({ popularGames, genreBased }) {
           ))}
         />
       </section>
-      <section className="GenreSection">
+      <section className="GenreSection" id="genre ">
         <h2>GENRES</h2>
         <div className="GenreSection__listing">
           {genreBased.map((game, index) => (

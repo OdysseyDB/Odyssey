@@ -146,3 +146,67 @@ model Genres {
   url        String   @db.LongText
   checksum   String   @db.VarChar(100)
 }
+
+model Platform {
+  id               String @id @unique
+  alternative_name String @db.VarChar(100)
+  category         String @db.VarChar(100)
+  created_at       String @db.VarChar(100)
+  name             String @db.VarChar(100)
+  platform_logo    String @db.VarChar(100)
+  slug             String @db.VarChar(100)
+  updated_at       String @db.VarChar(100)
+  url              String @db.LongText
+  versions         String @db.VarChar(100)
+  websites         String @db.VarChar(100)
+  checksum         String @db.VarChar(100)
+  generation       String @db.VarChar(100)
+  platform_family  String @db.VarChar(100)
+  abbreviation     String @db.VarChar(100)
+  summary          String @db.LongText
+}
+
+model PlatformCompany {
+  id           String @id @unique
+  company      String @db.VarChar(100)
+  developer    String @db.VarChar(100)
+  manufacturer String @db.VarChar(100)
+  checksum     String @db.VarChar(100)
+  comment      String @db.VarChar(100)
+}
+
+model PlatformEnums {
+  value        String @id @unique
+  platformType String @db.VarChar(100)
+}
+
+model PlatformFamily {
+  id       String @id @unique
+  name     String @db.VarChar(100)
+  slug     String @db.VarChar(100)
+  checksum String @db.VarChar(100)
+}
+
+model PlatformLogo {
+  id            Int @id @unique
+  alpha_channel String @db.VarChar(100)
+  animated      String @db.VarChar(100)
+  height        String @db.VarChar(100)
+  image_id      String @db.VarChar(100)
+  url           String @db.VarChar(100)
+  width         String @db.VarChar(100)
+  checksum      String @db.VarChar(100)
+}
+
+model PlatformSite {
+  id       String @id @unique
+  category String @db.VarChar(100)
+  trusted  String @db.VarChar(100)
+  url      String @db.LongText
+  checksum String @db.VarChar(100)
+}
+
+model PlatformWebsiteEnums {
+  value      Int    @id @unique
+  websiteSrc String @db.VarChar(100)
+}
