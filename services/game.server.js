@@ -63,6 +63,7 @@ export async function fetchGameCardData(gameIds) {
       summary: true,
       CoverImage: true,
       platforms: true,
+      created_at: true,
     },
   });
 

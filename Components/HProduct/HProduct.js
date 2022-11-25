@@ -17,7 +17,10 @@ export default function HProduct({ gameData }) {
           />
         </div>
         <div className="HProduct__right">
-          <h2 className="HProduct__rightTop">{gameData.name}</h2>
+          <h2 className="HProduct__rightTop">
+            {gameData.name}{" "}
+            <span> ({new Date(gameData.created_at).toDateString()})</span>
+          </h2>
           <div className="HProduct__rightBottom">{gameData.summary}</div>
         </div>
       </a>
