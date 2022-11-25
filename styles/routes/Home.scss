@@ -40,10 +40,15 @@
 
       &--controls {
         position: absolute;
-        right: 25px;
+        right: 50%;
+        transform: translateX(50%);
         bottom: 25px;
+        @include box(100vw, auto);
+        max-width: 1152px;
+        
+
         z-index: 2;
-        @include make-flex();
+        @include make-flex($align: flex-end);
         gap: 20px;
 
         button {
@@ -70,7 +75,7 @@
       @include box();
       position: relative;
       flex: 0 0 100%;
-
+      @include make-flex();
       &::before {
         position: absolute;
         top: 0;
@@ -115,9 +120,11 @@
       &--content {
         position: relative;
         z-index: 1;
-        @include box(60%);
+        @include box();
+        // margin: 0 400px;
+        max-width: 1152px;
         @include make-flex($align: flex-start);
-        padding-left: 40px;
+        // padding-left: 40px;
         font-family: "Montserrat", sans-serif;
         gap: 20px;
         h2 {
@@ -161,7 +168,8 @@
     }
   }
 
-  .PopularSection {
+  .PopularSection,
+  .GenreSection {
     @include box(100vw, 580px);
     max-width: 1152px;
     position: relative;
@@ -182,6 +190,19 @@
         @include box(80px, 2px);
         background-color: #2a2b31;
       }
+    }
+  }
+
+  .GenreSection {
+    @include box(100vw, auto);
+
+    &__listing {
+      @include box();
+      @include make-flex($dir: row, $align: flex-start);
+      gap: 20px;
+      overflow-x: hidden;
+      flex-wrap: wrap;
+      padding: 10px;
     }
   }
 }

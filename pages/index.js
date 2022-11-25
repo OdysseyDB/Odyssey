@@ -110,6 +110,14 @@ export default function Home({ popularGames, genreBased }) {
           ))}
         />
       </section>
+      <section className="GenreSection">
+        <h2>GENRES</h2>
+        <div className="GenreSection__listing">
+          {genreBased.map((game, index) => (
+            <GenreBox key={index} slug={game.slug} game={game.game[0]} GenreType={game.name} />
+          ))}
+        </div>
+      </section>
       {/* <div className="LandingPage__container">
         {popularGames.map((game) => (
         ))}

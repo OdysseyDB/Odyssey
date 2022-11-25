@@ -1,7 +1,50 @@
 import db from "../lib/prisma";
 
+async function fetchOneGameOfGenre(genre) {
+  return await db.game.findMany({
+    where: {
+      OR: [
+        {
+          genres: {
+            contains: `[${genre.id},`,
+          },
+        },
+        {
+          genres: {
+            contains: ` ${genre.id},`,
+          },
+        },
+        {
+          genres: {
+            contains: ` ${genre.id}]`,
+          },
+        },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      rating: true,
+      themes: true,
+      summary: true,
+      CoverImage: true,
+    },
+    take: 1,
+  });
+}
+
 export async function fetchGenres() {
-  return db.genres.findMany();
+  let genres = await db.genres.findMany();
+
+  genres = genres.map(async (genre) => {
+    return {
+      ...genre,
+      game: await fetchOneGameOfGenre(genre),
+    };
+  });
+
+  return Promise.all(genres);
 }
 
 export async function fetchGameCardData(gameIds) {
