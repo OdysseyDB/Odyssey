@@ -12,6 +12,8 @@
     "@prisma/client": "^4.1.1",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
+    "embla-carousel-autoplay": "^7.0.5",
+    "embla-carousel-react": "^7.0.5",
     "iron-session": "^6.2.0",
     "nanoid": "^4.0.0",
     "next": "^12.2.3",

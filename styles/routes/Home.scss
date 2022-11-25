@@ -18,14 +18,147 @@
     }
   }
 
-&__genre{
-  @include box($height:auto);
-  @include make-flex($dir:row);
-  flex-wrap: wrap;
-  max-width: 1152px;
-  padding: 30px 0;
-  gap:20px;
-  overflow-x: hidden;
+  &__genre {
+    @include box($height: auto);
+    @include make-flex($dir: row);
+    flex-wrap: wrap;
+    max-width: 1152px;
+    padding: 30px 0;
+    gap: 20px;
+    overflow-x: hidden;
+  }
 
-}
+  .HeroSection {
+    @include box(100vw, 580px);
+    overflow: hidden;
+    position: relative;
+    // @include make-flex($dir: row,);
+    background-color: #f6f6f6;
+
+    &__slider {
+      @include box();
+      @include make-flex($align: flex-start, $dir: row, $just: flex-start);
+
+      &--controls {
+        position: absolute;
+        right: 25px;
+        bottom: 25px;
+        z-index: 2;
+        @include make-flex();
+        gap: 20px;
+
+        button {
+          padding: 10px;
+          background-color: #2A2B31;
+          border: 1px solid whitesmoke;
+          border-radius: 5px;
+          cursor: pointer;
+          @include box(35px, 40px);
+          @include make-flex();
+          &::before {
+            background-color: #2A2B31;
+          }
+
+          &:first-child {
+            &::before {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+    }
+    &__slideItem {
+      @include box();
+      position: relative;
+      flex: 0 0 100%;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "";
+        @include box();
+        z-index: 1;
+        background: linear-gradient(
+          90deg,
+          #202125 0,
+          rgba(32, 33, 37, 0.6) 40%,
+          rgba(32, 33, 37, 0) 60%,
+          rgba(32, 33, 37, 0) 80%,
+          #202125 100%
+        );
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include box();
+        background: linear-gradient(
+          0deg,
+          #202125 0,
+          rgba(32, 33, 37, 0) 50%,
+          #202125 100%
+        );
+      }
+
+      img {
+        @include box();
+        position: absolute;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        filter: blur(0px);
+        background-position-x: right;
+      }
+
+      &--content {
+        position: relative;
+        z-index: 1;
+        @include box(60%);
+        @include make-flex($align: flex-start);
+        padding-left: 40px;
+        font-family: "Montserrat", sans-serif;
+        gap: 20px;
+        h2 {
+          color: white;
+          font-size: 30px;
+        }
+
+        p {
+          @include box(75%, auto);
+          color: white;
+          font-size: 14px;
+          font-weight: 300;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      }
+
+      &--row {
+        color: white;
+        @include make-flex($dir: row);
+        @include box(auto, auto);
+        gap: 10px;
+        ul {
+          @include make-flex($dir: row);
+          gap: 10px;
+          list-style: none;
+          li {
+            border-radius: 18px;
+            @include box(auto, auto);
+            border: 0.5px solid;
+            padding: 2px 10px;
+            font-size: 14px;
+            white-space: nowrap;
+            background-color: lightgreen;
+            color: black;
+          }
+        }
+      }
+    }
+  }
 }

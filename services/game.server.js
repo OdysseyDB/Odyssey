@@ -63,6 +63,7 @@ export async function fetchPopularGames() {
       rating: true,
       themes: true,
       genres: true,
+      summary: true,
       CoverImage: true,
     },
   });
@@ -84,9 +85,20 @@ export async function fetchPopularGames() {
     });
     delete gameItem.themes;
 
+    const Genres = await db.Genres.findMany({
+      where: {
+        id: {
+          in: eval(gameItem.genres).map((item) => JSON.stringify(item)),
+        },
+      },
+    });
+
+    delete gameItem.genres;
+
     return {
       ...gameItem,
       theme,
+      Genres,
     };
   });
 
