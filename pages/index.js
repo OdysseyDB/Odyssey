@@ -4,9 +4,9 @@ import AccentButton from "../Components/AccentButton/AccentButton";
 import GameCard from "../Components/GameCard/GameCard";
 import GenreBox from "../Components/GenreBox/GenreBox";
 import Header from "../Components/Header/Header";
+import HorizontalScroll from "../Components/HorizontalScroll/HorizontalScroll";
 import { fetchGenres, fetchPopularGames } from "../services/game.server";
 import "../styles/routes/Home.scss";
-import Autoplay from "embla-carousel-autoplay";
 
 export async function getServerSideProps(context) {
   const popularGames = JSON.parse(JSON.stringify(await fetchPopularGames()));
@@ -23,11 +23,6 @@ export async function getServerSideProps(context) {
 
 export default function Home({ popularGames, genreBased }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-
-  // useEffect(() => {
-  //   if (emblaApi) {
-  //   }
-  // }, [emblaApi]);
 
   return (
     <div className="LandingPage">
@@ -50,9 +45,9 @@ export default function Home({ popularGames, genreBased }) {
                   <label>Genre: </label>
                   <ul>
                     {gameItem.Genres.map((genre, id) => (
-                      <Link href={`genre/${genre.slug}`}>
+                      <Link key={id} href={`genre/${genre.slug}`}>
                         <a>
-                          <li key={id}>{genre.name}</li>
+                          <li>{genre.name}</li>
                         </a>
                       </Link>
                     ))}
@@ -86,24 +81,37 @@ export default function Home({ popularGames, genreBased }) {
           <button
             data-icon={String.fromCharCode(58090)}
             onClick={() => emblaApi.scrollNext()}
-            />
+          />
           <button
             data-icon={String.fromCharCode(58090)}
             onClick={() => emblaApi.scrollPrev()}
           />
         </div>
       </section>
+      <section className="PopularSection">
+        <h2>POPULAR GAMES RIGHT NOW</h2>
+        <HorizontalScroll
+          slideItems={popularGames.map((gameItem, index) => (
+            <GameCard
+              id={gameItem.id}
+              key={gameItem.name}
+              name={gameItem.name}
+              slug={gameItem.slug}
+              rating={gameItem.rating}
+              genre={gameItem.theme}
+              imageSrc={gameItem.CoverImage[0].url.replace(
+                "t_thumb",
+                "t_cover_big"
+              )}
+              style={{
+                flex: "0 0 252.5px",
+              }}
+            />
+          ))}
+        />
+      </section>
       {/* <div className="LandingPage__container">
         {popularGames.map((game) => (
-          <GameCard
-            id={game.id}
-            key={game.name}
-            name={game.name}
-            slug={game.slug}
-            rating={game.rating}
-            genre={game.theme}
-            imageSrc={game.CoverImage[0].url.replace("t_thumb", "t_cover_big")}
-          />
         ))}
       </div>
       <div className="LandingPage__genre">

@@ -32,7 +32,6 @@
     @include box(100vw, 580px);
     overflow: hidden;
     position: relative;
-    // @include make-flex($dir: row,);
     background-color: #f6f6f6;
 
     &__slider {
@@ -49,14 +48,14 @@
 
         button {
           padding: 10px;
-          background-color: #2A2B31;
+          background-color: #2a2b31;
           border: 1px solid whitesmoke;
           border-radius: 5px;
           cursor: pointer;
           @include box(35px, 40px);
           @include make-flex();
           &::before {
-            background-color: #2A2B31;
+            background-color: #2a2b31;
           }
 
           &:first-child {
@@ -158,6 +157,30 @@
             color: black;
           }
         }
+      }
+    }
+  }
+
+  .PopularSection {
+    @include box(100vw, 580px);
+    max-width: 1152px;
+    position: relative;
+    @include make-flex($align: flex-start);
+    gap: 40px;
+
+    h2 {
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 1px;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        @include box(80px, 2px);
+        background-color: #2a2b31;
       }
     }
   }

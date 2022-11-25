@@ -1,0 +1,42 @@
+.HorizontalScroll {
+  @include make-flex($dir: row, $just: flex-start);
+  @include box($height: auto);
+
+  &__viewport {
+    overflow: hidden;
+    position: relative;
+  }
+
+  button {
+    position: absolute;
+    padding: 10px;
+    background-color: #2a2b31;
+    border: 1px solid whitesmoke;
+    cursor: pointer;
+    @include box(25px, 40px);
+    @include make-flex();
+    bottom: 50%;
+    border-radius: 0 5px 5px 0;
+    &:first-child {
+      left: 0;
+    }
+
+    &:last-child {
+      right: 0;
+      border-radius: 5px 0 0 5px;
+      &::before {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__container {
+    @include make-flex($align: flex-start, $dir: row, $just: flex-start);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  &__slideItem {
+    flex: 0 0 252.5px;
+  }
+}

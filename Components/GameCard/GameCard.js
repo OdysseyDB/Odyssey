@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./GameCard.scss";
 import Link from "next/link";
 
-function GameCard({ name, id, slug, genre, imageSrc, rating }) {
+function GameCard({ name, id, slug, genre, imageSrc, rating, ...props }) {
   const [onHover, setOnHover] = useState(false);
   return (
     <Link href={`/game/${slug}`}>
@@ -10,6 +10,7 @@ function GameCard({ name, id, slug, genre, imageSrc, rating }) {
         className="GameCard"
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}
+        {...props}
       >
         <div className="GameCard__imageBox">
           <span
