@@ -3,7 +3,7 @@
   border: none;
   @include make-flex();
   @include box();
-  background-color: #ff5858;
+  background-color: rgba(145, 71, 255, 0.9);
   color: #fafafa;
   cursor: pointer;
   padding: 10px 20px;

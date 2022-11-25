@@ -1,7 +1,7 @@
 import GameCard from "../Components/GameCard/GameCard";
 import GenreBox from "../Components/GenreBox/GenreBox";
 import Header from "../Components/Header/Header";
-import HProject from "../Components/HProduct/HProject";
+import HProject from "../Components/HProduct/HProduct";
 import { fetchGenres, fetchPopularGames } from "../services/game.server";
 import "../styles/routes/Home.scss";
 

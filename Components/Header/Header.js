@@ -16,7 +16,7 @@ function Header() {
             <li>Genre</li>
             <li>Platform</li>
           </ul>
-          <AccentButton isLink={true} href="#login">
+          <AccentButton  isLink={true} href="#login">
             Login
           </AccentButton>
         </div>

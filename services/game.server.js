@@ -4,6 +4,7 @@ export async function fetchGenres() {
   return db.genres.findMany();
 }
 
+
 export async function fetchGameCardData(gameIds) {
   let game = await db.game.findMany({
     where: {
@@ -137,11 +138,13 @@ export async function fetchGameFromSlug(slug) {
   };
 }
 
+
 export async function fetchGenreBySlug(slug) {
   let genres = await db.genres.findMany({
     where: {
       slug: slug,
     },
+ 
   });
   genres = genres[0];
 
@@ -167,6 +170,8 @@ export async function fetchGenreBySlug(slug) {
     },
     take: 10,
   });
+
+
 
   return await fetchGameCardData(game.map((item) => item.id));
 }

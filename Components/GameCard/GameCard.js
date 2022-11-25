@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./GameCard.scss";
 import Link from "next/link";
 
-function GameCard({ name, id, slug, genre, imageSrc, rating }) {
+function GameCard({ name, slug, genre, imageSrc, rating }) {
   const [onHover, setOnHover] = useState(false);
   return (
     <Link href={`/game/${slug}`}>

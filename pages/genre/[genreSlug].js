@@ -20,7 +20,9 @@ export async function getServerSideProps(context) {
 export default function GenrePage({ genreData }) {
   return (
     <div className="GenrePage">
-      <HProduct gameData={genreData[0]} />
+      {genreData.map((gameItem, key) => (
+        <HProduct key={key} gameData={gameItem} />
+      ))}
     </div>
   );
 }
