@@ -3,10 +3,10 @@
   border: none;
   @include make-flex();
   @include box();
-  background-color: rgba(145, 71, 255, 0.9);
+  background-color: #ff5858;
   color: #fafafa;
   cursor: pointer;
   padding: 10px 20px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 500;
 }
