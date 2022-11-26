@@ -13,7 +13,9 @@
     @include respondAt(1160px) {
       padding-left: 8px;
     }
-
+    .element {
+      accent-color: rgba(145, 71, 255, 0.9);
+    }
     &--left,
     &--right {
       @include box(auto);

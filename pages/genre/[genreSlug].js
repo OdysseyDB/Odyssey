@@ -18,12 +18,13 @@ export async function getServerSideProps(context) {
 }
 
 export default function GenrePage({ genreData }) {
-
   return (
     <div className="GenrePage">
       <Header />
       <section className="GenrePage__container">
-        <h2  className="GenrePage__container--title">{genreData.genre.name} Games</h2>
+        <h2 className="GenrePage__container--title">
+          {genreData.genre.name} Games
+        </h2>
         <div className="GenrePage__container--verticalView">
           {genreData.games.map((game, index) => (
             <HProduct gameData={game} key={index} />

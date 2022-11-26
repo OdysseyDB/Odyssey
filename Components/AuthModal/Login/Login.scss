@@ -3,12 +3,12 @@
   padding: 10px 30px 20px;
   @include box($height: auto);
   @include make-flex($just: flex-start, $align: stretch);
-
+ 
   &__row {
     @include make-flex();
     gap: 7px;
     &--error {
-      color: #fe5349;
+      color: rgba(145, 71, 255, 0.9);
       font-family: Roboto;
       width: 100%;
     }
@@ -29,7 +29,7 @@
       height: 45px;
       border-radius: 4.77px;
       background-color: transparent;
-      border: 1px solid white;
+      border: 1px solid black;
       padding: 7px 10px;
 
       @include respondAt(500px) {
@@ -57,13 +57,16 @@
   &__button {
     @include make-flex($dir: row, $just: center);
     button {
+      outline: none;
+      border: none;
+      @include make-flex();
+      @include box();
+      background-color: rgba(145, 71, 255, 0.9);
+      color: #fafafa;
       cursor: pointer;
-      border: 0px;
-      background-color: white;
-      color: black;
-      font-family: "Sequel100Black-65";
-      font-size: 18px;
-      padding: 0px 16px;
+      padding: 10px 20px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
 
       @include respondAt(500px) {
         font-size: 15px;

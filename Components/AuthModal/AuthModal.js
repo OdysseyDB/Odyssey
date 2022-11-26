@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import Login from "./Login/Login";
 import SignUp from "./SignUp/SignUp";
 import ResetPassword from "./ResetPassword/ResetPassword";
+import AccentButton from "../AccentButton/AccentButton";
+
 
 export default function AuthModal() {
   const [hash, setHash] = React.useState("");
@@ -24,7 +26,7 @@ export default function AuthModal() {
     }
     window.addEventListener("hashchange", () => {
       setHash(window.location.hash);
-
+      
       if (
         window.location.hash === "#login" ||
         window.location.hash === "#signup" ||
@@ -63,33 +65,50 @@ export default function AuthModal() {
             </span>
             <h2>Odyssey</h2>
             <div className="AuthModal__tabs">
-              <a
+              <AccentButton
+                style={{
+                  height: "33px",
+                  width: "90px",
+                }}
                 href="#login"
+                isLink={true}
                 className={hash === "#login" ? "route--active" : ""}
                 onClick={() => {
                   setHash("#login");
                 }}
               >
-                <p>Login</p>
-              </a>
-              <a
+                Login
+              </AccentButton>
+
+              <AccentButton
+                style={{
+                  height: "33px",
+                  width: "90px",
+                }}
                 href="#signup"
+                isLink={true}
                 className={hash === "#signup" ? "route--active" : ""}
                 onClick={() => {
                   setHash("#signup");
                 }}
               >
-                <p>Sign Up</p>
-              </a>
-              <a
+                SignUp
+              </AccentButton>
+              <AccentButton
+                style={{
+                  height: "33px",
+                  width: "90px",
+                }}
                 href="#reset-password"
+                isLink={true}
                 className={hash === "#reset-password" ? "route--active" : ""}
                 onClick={() => {
                   setHash("#reset-password");
                 }}
               >
-                <p>Reset pass</p>
-              </a>
+              Resetpass 
+              </AccentButton>
+             
             </div>
             {hash === "#login" && (
               <Login

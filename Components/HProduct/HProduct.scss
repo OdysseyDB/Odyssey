@@ -4,7 +4,6 @@
   padding: 13px;
   gap: 15px;
   overflow-x: auto;
-  position: relative;
   font-family: "Montserrat", sans-serif;
 
   &__left {
@@ -13,48 +12,39 @@
     img {
       @include box();
       border-radius: 5px;
+      @include box();
+      @include make-flex($just: flex-start, $align: flex-start);
+      gap: 20px;
+      padding: 0 40px 0 0;
+      color: #464646;
     }
 
-    @include respondAt(576px) {
-      width: 100%;
-      height: 200px;
-      margin-bottom: 20px;
+    &__rightTop {
+      font-weight: 800;
+      span {
+        color: #a7a7a7;
+        font-size: 15px;
+        font-weight: 400;
+        font-style: italic;
+      }
     }
-  }
 
-  &__right {
-    @include box();
-    @include make-flex($just: flex-start, $align: flex-start);
-    gap: 20px;
-    padding: 0 40px 0 0;
-    color: #464646;
-  }
-
-  &__rightTop {
-    font-weight: 800;
-    span {
-      color: #a7a7a7;
-      font-size: 15px;
-      font-weight: 400;
-      font-style: italic;
+    &__rightBottom {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 300;
     }
-  }
 
-  &__rightBottom {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-size: 14px;
-    font-weight: 300;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    @include box(80%, 1px);
-    background-color: #a7a7a7;
-    z-index: 1;
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      @include box(80%, 1px);
+      background-color: #a7a7a7;
+      z-index: 1;
+    }
   }
 }

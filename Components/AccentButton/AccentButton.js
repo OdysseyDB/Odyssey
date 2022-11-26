@@ -1,15 +1,15 @@
 import "./AccentButton.scss";
 
-function AccentButton({ children, isLink, ...props }) {
+function AccentButton({ children, isLink, className, ...props }) {
   if (isLink) {
     return (
-      <a className="AccentButtonWrapper" {...props}>
+      <a className={`AccentButtonWrapper ${className}`} {...props}>
         {children}
       </a>
     );
   }
   return (
-    <button className="AccentButtonWrapper" {...props}>
+    <button className={`AccentButtonWrapper ${className}`} {...props}>
       {children}
     </button>
   );
