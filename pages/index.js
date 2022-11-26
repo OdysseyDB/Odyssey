@@ -82,6 +82,7 @@ export default function Home({ popularGames, genreBased }) {
             data-icon={String.fromCharCode(58090)}
             onClick={() => emblaApi.scrollNext()}
           />
+
           <button
             data-icon={String.fromCharCode(58090)}
             onClick={() => emblaApi.scrollPrev()}
@@ -114,7 +115,12 @@ export default function Home({ popularGames, genreBased }) {
         <h2>GENRES</h2>
         <div className="GenreSection__listing">
           {genreBased.map((game, index) => (
-            <GenreBox key={index} slug={game.slug} game={game.game[0]} GenreType={game.name} />
+            <GenreBox
+              key={index}
+              slug={game.slug}
+              game={game.game[0]}
+              GenreType={game.name}
+            />
           ))}
         </div>
       </section>
