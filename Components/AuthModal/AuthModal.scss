@@ -30,7 +30,7 @@
 
     &--close {
       position: absolute;
-      top: 20px;
+      top: 17px;
       right: 22px;
       font-size: 30px;
       cursor: pointer;
@@ -51,8 +51,8 @@
   }
 
   h2 {
-    font-family: "Sequel100Black-65";
-    font-size: 54px;
+    font-family: "Poppins", sans-serif;
+    font-size: 44px;
     text-align: center;
     width: 100%;
     line-height: 90px;
@@ -64,7 +64,7 @@
   }
   &__tabs {
     font-size: 15px;
-    font-family: "Sequel100Black-65";
+    font-family: "Poppins", sans-serif;
     @include make-flex($dir: row, $just: flex-start);
     @include box(100%, auto);
     padding: 0 30px;

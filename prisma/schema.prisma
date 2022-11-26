@@ -188,7 +188,7 @@ model PlatformFamily {
 }
 
 model PlatformLogo {
-  id            Int @id @unique
+  id            Int    @id @unique
   alpha_channel String @db.VarChar(100)
   animated      String @db.VarChar(100)
   height        String @db.VarChar(100)
@@ -209,4 +209,11 @@ model PlatformSite {
 model PlatformWebsiteEnums {
   value      Int    @id @unique
   websiteSrc String @db.VarChar(100)
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String @unique @db.VarChar(100)
+  email    String @unique @db.VarChar(100)
+  password String @db.VarChar(250)
 }

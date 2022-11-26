@@ -48,7 +48,7 @@ export default function Login({ onLogin }) {
 
   return (
     <>
-      {showLoader && <BlurredSpinner style={{ borderRadius: "7px" }} />}
+      {showLoader && <BlurredSpinner style={{ borderRadius: "3px" }} />}
 
       <form method="POST" className="LogIn" onSubmit={handleSubmit}>
         <div className="LogIn__row">

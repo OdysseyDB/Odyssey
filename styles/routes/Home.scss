@@ -28,8 +28,6 @@
     overflow-x: hidden;
   }
 
-
-
   .HeroSection {
     @include box(100vw, 580px);
     overflow: hidden;
@@ -47,7 +45,6 @@
         bottom: 25px;
         @include box(100vw, auto);
         max-width: 1152px;
-        
 
         z-index: 2;
         @include make-flex($align: flex-end);
@@ -143,6 +140,14 @@
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
+
+          @include respondAt(650px) {
+            width: 100%;
+          }
+        }
+
+        @include respondAt(1185px) {
+          padding: 0 40px;
         }
       }
 
@@ -152,8 +157,9 @@
         @include box(auto, auto);
         gap: 10px;
         ul {
-          @include make-flex($dir: row);
+          @include make-flex($dir: row, $just: flex-start);
           gap: 10px;
+          flex-wrap: wrap;
           list-style: none;
           li {
             border-radius: 18px;
@@ -177,6 +183,10 @@
     position: relative;
     @include make-flex($align: flex-start);
     gap: 40px;
+
+    @include respondAt(1185px) {
+      padding: 0 20px;
+    }
 
     h2 {
       font-family: "Poppins", sans-serif;

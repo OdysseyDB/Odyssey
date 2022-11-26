@@ -3,9 +3,7 @@ import "./AuthModal.scss";
 import { useRouter } from "next/router";
 import Login from "./Login/Login";
 import SignUp from "./SignUp/SignUp";
-import ResetPassword from "./ResetPassword/ResetPassword";
 import AccentButton from "../AccentButton/AccentButton";
-
 
 export default function AuthModal() {
   const [hash, setHash] = React.useState("");
@@ -26,7 +24,7 @@ export default function AuthModal() {
     }
     window.addEventListener("hashchange", () => {
       setHash(window.location.hash);
-      
+
       if (
         window.location.hash === "#login" ||
         window.location.hash === "#signup" ||
@@ -68,7 +66,7 @@ export default function AuthModal() {
               <AccentButton
                 style={{
                   height: "33px",
-                  width: "90px",
+                  width: "100px",
                 }}
                 href="#login"
                 isLink={true}
@@ -83,7 +81,7 @@ export default function AuthModal() {
               <AccentButton
                 style={{
                   height: "33px",
-                  width: "90px",
+                  width: "100px",
                 }}
                 href="#signup"
                 isLink={true}
@@ -92,23 +90,8 @@ export default function AuthModal() {
                   setHash("#signup");
                 }}
               >
-                SignUp
+                Sign Up
               </AccentButton>
-              <AccentButton
-                style={{
-                  height: "33px",
-                  width: "90px",
-                }}
-                href="#reset-password"
-                isLink={true}
-                className={hash === "#reset-password" ? "route--active" : ""}
-                onClick={() => {
-                  setHash("#reset-password");
-                }}
-              >
-              Resetpass 
-              </AccentButton>
-             
             </div>
             {hash === "#login" && (
               <Login
@@ -128,15 +111,6 @@ export default function AuthModal() {
                   window.location.hash = "";
                   router.replace(window.location.pathname);
                   router.reload();
-                }}
-              />
-            )}
-            {hash === "#reset-password" && (
-              <ResetPassword
-                onPasswordReset={() => {
-                  setIsOpen(false);
-                  setHash("#login");
-                  window.location.hash = "#login";
                 }}
               />
             )}

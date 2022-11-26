@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 import PinInput from "react-pin-input";
 import useForm from "../../../hooks/useForm";
 import BlurredSpinner from "../../BlurredSpinner/BlurredSpinner";
-import { register, sendOtp } from "../../../operations/auth.fetch";
+import { register } from "../../../operations/auth.fetch";
 import { isEmail, isPassword, isUsername } from "../../../utils/validate";
 
 export default function SignUp({ onSignUp }) {
@@ -14,20 +14,9 @@ export default function SignUp({ onSignUp }) {
     password: "",
     confirmPassword: "",
   };
-  const [showOtp, setShowOtp] = React.useState(false);
-  const [cryptOtp, setCryptOtp] = React.useState("");
-  const [showLoader, setShowLoader] = React.useState(false);
-  const [otpError, setOtpError] = React.useState("");
-  const [duplicateError, setDuplicateError] = React.useState({});
 
-  const [isMobile, setIsMobile] = React.useState(false);
-  React.useEffect(() => {
-    if (window.innerWidth < 500) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  });
+  const [showLoader, setShowLoader] = React.useState(false);
+  const [duplicateError, setDuplicateError] = React.useState({});
 
   async function validate(formValues) {
     const errs = {};
@@ -63,12 +52,13 @@ export default function SignUp({ onSignUp }) {
 
       setShowLoader(true);
 
-      await sendOtp(formData).then((res) => {
-        setCryptOtp(res.otp);
-        setShowLoader(false);
+      await register(formData).then((res) => {
+        console.log(res);
         if (res.status === 200) {
-          setShowOtp(true);
+          setShowLoader(false);
+          onSignUp();
         } else {
+          setShowLoader(false);
           setDuplicateError(res.message);
         }
       });
@@ -77,92 +67,8 @@ export default function SignUp({ onSignUp }) {
 
   return (
     <>
-      {showLoader && <BlurredSpinner style={{ borderRadius: "7px" }} />}
-      {showOtp && (
-        <div className="Otp">
-          <div className="Otp__container">
-            <span
-              className="Otp__close"
-              onClick={() => {
-                setShowOtp(false);
-              }}
-            >
-              &#10799;
-            </span>
-            <div className="Otp__title">
-              <p>Verification Code</p>
-            </div>
-            <div className="Otp__desc">
-              <p>Please type the verification code sent to {formData.email}</p>
-              <em>(Also check your spam folder)</em>
-            </div>
-            <div className="Otp__pin">
-              <PinInput
-                length={5}
-                type="custom"
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "7px",
-                }}
-                inputStyle={{
-                  margin: "0",
-                  color: "black",
-                  border: "1px solid",
-                  width: isMobile ? "30px" : "50px",
-                  height: isMobile ? "30px" : "50px",
-                  fontSize: isMobile ? "15px" : "20px",
-                  borderRadius: isMobile ? "4px" : "7px",
-                }}
-                inputFocusStyle={{
-                  border: "2px solid",
-                }}
-                onComplete={async (value) => {
-                  const isMatch = bcrypt.compareSync(value, cryptOtp);
-                  setShowLoader(true);
+      {showLoader && <BlurredSpinner style={{ borderRadius: "3px" }} />}
 
-                  if (isMatch) {
-                    await register(formData).then((res) => {
-                      if (res.status === 200) {
-                        setShowLoader(false);
-                        setShowOtp(false);
-                        onSignUp();
-                      } else {
-                        setCryptOtp(res.message);
-                      }
-                    });
-                  } else {
-                    setShowLoader(false);
-                    setOtpError("Invalid OTP");
-                  }
-                }}
-                autoSelect={true}
-                validate={(value) => (/^[a-z0-9]*$/.test(value) ? value : "")}
-              />
-            </div>
-            {otpError !== "" && <span className="Otp__error">{otpError}</span>}
-            <div className="Otp__again">
-              <div className="Otp__again--text">
-                <p>Didn't get the code? &nbsp;</p>
-              </div>
-              <span
-                onClick={async () => {
-                  setShowLoader(true);
-                  setShowOtp(false);
-
-                  await sendOtp(formData).then((res) => {
-                    setCryptOtp(res.otp);
-                    setShowOtp(true);
-                    setShowLoader(false);
-                  });
-                }}
-              >
-                Send Again
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
       <form method="POST" className="SignUp" onSubmit={handleSubmit}>
         <div className="SignUp__row">
           <label htmlFor="friendlyName">Name</label>
@@ -242,7 +148,7 @@ export default function SignUp({ onSignUp }) {
         </div>
         <div className="SignUp__login">
           <div className="SignUp__login--text">Already have an account?</div>
-          <a href="#login">LogIn</a>
+          <a href="#login">Log In Here</a>
         </div>
       </form>
     </>

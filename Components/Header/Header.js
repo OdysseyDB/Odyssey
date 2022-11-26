@@ -1,9 +1,11 @@
 import React from "react";
+import useAuth from "../../hooks/useAuth";
 import AccentButton from "../AccentButton/AccentButton";
 import "./Header.scss";
 import Logo from "./Logo/Logo";
 
 function Header() {
+  const { user } = useAuth();
   return (
     <div className="Header">
       <div className="Header__container">
@@ -18,9 +20,22 @@ function Header() {
             </li>
             <li>Platform</li>
           </ul>
-          <AccentButton  isLink={true} href="#login">
-            Login
-          </AccentButton>
+          {!user ? (
+            <AccentButton isLink={true} href="#login">
+              Login
+            </AccentButton>
+          ) : (
+            <AccentButton
+              style={{
+                backgroundColor: "lightgreen",
+                color: "#454545",
+              }}
+              isLink={true}
+              href="/my/dashboard"
+            >
+              Profile
+            </AccentButton>
+          )}
         </div>
       </div>
     </div>
