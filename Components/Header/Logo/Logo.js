@@ -1,8 +1,10 @@
 import "./Logo.scss";
 
-const Logo = () => (
+const Logo = ({ style }) => (
   <a href="/">
-    <div className="LogoWrapper">ODYSSEY</div>
+    <div className="LogoWrapper" style={style}>
+      ODYSSEY
+    </div>
   </a>
 );
 

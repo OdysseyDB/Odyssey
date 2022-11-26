@@ -1,6 +1,7 @@
 import useEmblaCarousel from "embla-carousel-react";
 import Link from "next/link";
 import AccentButton from "../Components/AccentButton/AccentButton";
+import Footer from "../Components/Footer/Footer";
 import GameCard from "../Components/GameCard/GameCard";
 import GenreBox from "../Components/GenreBox/GenreBox";
 import Header from "../Components/Header/Header";
@@ -127,6 +128,7 @@ export default function Home({ popularGames, genreBased }) {
           <GenreBox key={index} slug={game.slug} GenreType={game.name} />
         ))}
       </div> */}
+      <Footer />
     </div>
   );
 }
