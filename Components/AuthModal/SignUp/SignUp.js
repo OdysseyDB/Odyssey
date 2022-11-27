@@ -49,11 +49,9 @@ export default function SignUp({ onSignUp }) {
     initialValues,
     onSubmit: async (formData) => {
       if (Object.keys(errors).length !== 0) return;
-
       setShowLoader(true);
 
       await register(formData).then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setShowLoader(false);
           onSignUp();

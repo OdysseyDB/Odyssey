@@ -10,10 +10,18 @@
   &__imageBox {
     position: relative;
     @include box(calc(252.5px - 26px), 302px);
+    background: linear-gradient(329deg, #cf94ff, #ff8e7c);
+    background-size: 400% 400%;
+
+    -webkit-animation: LoadingAnimation 1s ease infinite;
+    -moz-animation: LoadingAnimation 1s ease infinite;
+    animation: LoadingAnimation 1s ease infinite;
+    border-radius: 3px;
 
     img {
       @include box();
       border-radius: 3px;
+      object-fit: cover;
     }
   }
 
@@ -103,5 +111,40 @@
     &--visible {
       opacity: 1;
     }
+  }
+}
+
+
+@-webkit-keyframes LoadingAnimation {
+  0% {
+    background-position: 72% 0%;
+  }
+  50% {
+    background-position: 29% 100%;
+  }
+  100% {
+    background-position: 72% 0%;
+  }
+}
+@-moz-keyframes LoadingAnimation {
+  0% {
+    background-position: 72% 0%;
+  }
+  50% {
+    background-position: 29% 100%;
+  }
+  100% {
+    background-position: 72% 0%;
+  }
+}
+@keyframes LoadingAnimation {
+  0% {
+    background-position: 72% 0%;
+  }
+  50% {
+    background-position: 29% 100%;
+  }
+  100% {
+    background-position: 72% 0%;
   }
 }

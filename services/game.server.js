@@ -131,14 +131,15 @@ export async function fetchGameCardData(gameIds) {
   return Promise.all(final);
 }
 
-export async function fetchPopularGames() {
+export async function fetchPopularGames(count = 10, skip = 10) {
   // convert sql to prisma
   // select name, rating from Game order by rating DESC limit 10;
   const game = await db.game.findMany({
     orderBy: {
       rating: "desc",
     },
-    take: 10,
+    take: count,
+    skip: skip,
     select: {
       id: true,
       name: true,
@@ -168,6 +169,12 @@ export async function fetchPopularGames() {
     });
     delete gameItem.themes;
 
+    if (gameItem.genres === undefined) {
+      gameItem.genres = {};
+    }
+    if (gameItem.genres.length === 0) {
+      gameItem.genres = "[]";
+    }
     const Genres = await db.Genres.findMany({
       where: {
         id: {
@@ -269,7 +276,6 @@ export async function fetchGenreBySlug(slug, offset) {
     },
   });
 
-
   let game = await db.game.findMany({
     where: {
       OR: [
@@ -296,7 +302,120 @@ export async function fetchGenreBySlug(slug, offset) {
 
   return {
     genre: genres,
-    maxPage: Math.floor((maxPage.length)/10),
+    maxPage: Math.floor(maxPage.length / 10),
     games: await fetchGameCardData(game.map((item) => item.id)),
+  };
+}
+
+export async function fetchGamesByPlatform() {
+  let linux = await db.game.findMany({
+    where: {
+      OR: [
+        {
+          platforms: {
+            contains: `[3,`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` 3,`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` 3]`,
+          },
+        },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      rating: true,
+      themes: true,
+      summary: true,
+      CoverImage: true,
+      platforms: true,
+      created_at: true,
+      age_ratings: true,
+    },
+    take: 10,
+  });
+
+  let n64 = await db.game.findMany({
+    where: {
+      OR: [
+        {
+          platforms: {
+            contains: `[4,`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` 4,`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` 4]`,
+          },
+        },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      rating: true,
+      themes: true,
+      summary: true,
+      CoverImage: true,
+      platforms: true,
+      created_at: true,
+      age_ratings: true,
+    },
+    take: 10,
+  });
+
+  let ps = await db.game.findMany({
+    where: {
+      OR: [
+        {
+          platforms: {
+            contains: `[7,`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` 7,`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` 7]`,
+          },
+        },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      rating: true,
+      themes: true,
+      summary: true,
+      CoverImage: true,
+      platforms: true,
+      created_at: true,
+      age_ratings: true,
+    },
+    take: 10,
+  });
+
+  return {
+    linux,
+    n64,
+    ps,
   };
 }

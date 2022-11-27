@@ -6,23 +6,43 @@ import GameCard from "../Components/GameCard/GameCard";
 import GenreBox from "../Components/GenreBox/GenreBox";
 import Header from "../Components/Header/Header";
 import HorizontalScroll from "../Components/HorizontalScroll/HorizontalScroll";
-import { fetchGenres, fetchPopularGames } from "../services/game.server";
+import SmallHProduct from "../Components/SmallHProduct/SmallHProduct";
+import {
+  fetchGamesByPlatform,
+  fetchGenres,
+  fetchPopularGames,
+} from "../services/game.server";
 import "../styles/routes/Home.scss";
 
 export async function getServerSideProps(context) {
   const popularGames = JSON.parse(JSON.stringify(await fetchPopularGames()));
+
+  const popularGames2 = JSON.parse(
+    JSON.stringify(await fetchPopularGames(40, Math.floor(Math.random() * 100)))
+  );
   const genreBased = JSON.parse(JSON.stringify(await fetchGenres()));
+  const platformBased = JSON.parse(
+    JSON.stringify(await fetchGamesByPlatform())
+  );
 
   return {
     props: {
       currentPath: context.req.url,
       popularGames,
+      popularGames2,
       genreBased,
+      platformBased,
     },
   };
 }
 
-export default function Home({ popularGames, genreBased }) {
+/** @param {import('next').InferGetServerSidePropsType<typeof getServerSideProps> } props */
+export default function Home({
+  popularGames,
+  popularGames2,
+  genreBased,
+  platformBased,
+}) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
 
   return (
@@ -33,17 +53,14 @@ export default function Home({ popularGames, genreBased }) {
           {popularGames.map((gameItem, index) => (
             <div className="HeroSection__slideItem embla__slide" key={index}>
               <img
-                src={gameItem.CoverImage[0].url.replace(
-                  "t_thumb",
-                  "t_screenshot_big"
-                )}
+                src={gameItem.CoverImage[0].url.replace("t_thumb", "t_1080p")}
               />
               <div className="HeroSection__slideItem--content">
                 <h2>{gameItem.name}</h2>
                 <p>{gameItem.summary}</p>
 
                 <div className="HeroSection__slideItem--row">
-                  <label>Genre: </label>
+                  <label>Genres: </label>
                   <ul>
                     {gameItem.Genres.map((genre, id) => (
                       <Link key={id} href={`genre/${genre.slug}`}>
@@ -54,14 +71,16 @@ export default function Home({ popularGames, genreBased }) {
                     ))}
                   </ul>
                 </div>
-                <div className="HeroSection__slideItem--row">
-                  <label>Themes: </label>
-                  <ul>
-                    {gameItem.theme.map((item, id) => (
-                      <li key={id}>{item.name}</li>
-                    ))}
-                  </ul>
-                </div>
+                {gameItem.theme.length !== 0 && (
+                  <div className="HeroSection__slideItem--row">
+                    <label>Themes: </label>
+                    <ul>
+                      {gameItem.theme.map((item, id) => (
+                        <li key={id}>{item.name}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 <AccentButton
                   isLink={true}
                   href={`game/${gameItem.slug}`}
@@ -93,7 +112,7 @@ export default function Home({ popularGames, genreBased }) {
       <section className="PopularSection">
         <h2>POPULAR GAMES RIGHT NOW</h2>
         <HorizontalScroll
-          slideItems={popularGames.map((gameItem, index) => (
+          slideItems={popularGames2.map((gameItem, index) => (
             <GameCard
               id={gameItem.id}
               key={gameItem.name}
@@ -125,15 +144,34 @@ export default function Home({ popularGames, genreBased }) {
           ))}
         </div>
       </section>
-      {/* <div className="LandingPage__container">
-        {popularGames.map((game) => (
-        ))}
-      </div>
-      <div className="LandingPage__genre">
-        {genreBased.map((game, index) => (
-          <GenreBox key={index} slug={game.slug} GenreType={game.name} />
-        ))}
-      </div> */}
+      <section className="TripleSection">
+        <div className="TripleSection__container">
+          <section className="TripleSection__item">
+            <h2>Linux</h2>
+            <div className="TripleSection__item--listing">
+              {platformBased.linux.map((game, index) => (
+                <SmallHProduct key={index} product={game} />
+              ))}
+            </div>
+          </section>
+          <section className="TripleSection__item">
+            <h2>Nintendo 64</h2>
+            <div className="TripleSection__item--listing">
+              {platformBased.n64.map((game, index) => (
+                <SmallHProduct key={index} product={game} />
+              ))}
+            </div>
+          </section>
+          <section className="TripleSection__item">
+            <h2>PlayStation</h2>
+            <div className="TripleSection__item--listing">
+              {platformBased.ps.map((game, index) => (
+                <SmallHProduct key={index} product={game} />
+              ))}
+            </div>
+          </section>
+        </div>
+      </section>
       <Footer />
     </div>
   );

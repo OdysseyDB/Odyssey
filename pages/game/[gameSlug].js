@@ -17,8 +17,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function GamePage({ currentPath, gameData }) {
-  console.log(gameData);
+export default function GamePage({ gameData }) {
   return (
     <div className="GamePage">
       <Header />
