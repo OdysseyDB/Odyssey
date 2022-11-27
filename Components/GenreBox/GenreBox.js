@@ -1,10 +1,10 @@
 import "./GenreBox.scss";
 import Link from "next/link";
 
-export default function GenreBox({ GenreType, slug }) {
+export default function GenreBox({ GenreType,name, slug,  }) {
   return (
-    <Link href={`/genre/${slug}`}>
-      <a className="GenreBox">{GenreType}</a>
+    <Link href={`/${GenreType}/${slug}`}>
+      <a className="GenreBox">{name}</a>
     </Link>
   );
 }

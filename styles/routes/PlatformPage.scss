@@ -1,4 +1,4 @@
-.GenrePage {
+.PlatformPage {
   @include make-flex($dir: column, $just: flex-start);
   @include box($height: unset);
   min-height: 100vh;
@@ -6,10 +6,9 @@
   overflow-x: hidden;
   &__container {
     @include box(100vw, auto);
-    max-width: 1152px;
-    padding: 0 20px;
     max-width: calc(1152px + 20px);
     position: relative;
+    padding: 0 20px;
     @include make-flex($just: flex-start);
     gap: 30px;
     &--title {

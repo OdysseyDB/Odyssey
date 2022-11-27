@@ -34,6 +34,40 @@ async function fetchOneGameOfGenre(genre) {
   });
 }
 
+async function fetchOneGameOfPlatform(platform) {
+  return await db.game.findMany({
+    where: {
+      OR: [
+        {
+          platforms: {
+            contains: `[${platform.id},`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` ${platform.id},`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` ${platform.id}]`,
+          },
+        },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      rating: true,
+      themes: true,
+      summary: true,
+      CoverImage: true,
+    },
+    take: 1,
+  });
+}
+
 export async function fetchGenres() {
   let genres = await db.genres.findMany();
 
@@ -45,6 +79,10 @@ export async function fetchGenres() {
   });
 
   return Promise.all(genres);
+}
+
+export async function fetchPlatforms() {
+  return await db.platform.findMany();
 }
 
 export async function fetchGameCardData(gameIds) {
@@ -302,7 +340,7 @@ export async function fetchGenreBySlug(slug, offset) {
 
   return {
     genre: genres,
-    maxPage: Math.floor(maxPage.length / 10),
+    maxPage: Math.ceil(maxPage.length / 10),
     games: await fetchGameCardData(game.map((item) => item.id)),
   };
 }
@@ -417,5 +455,73 @@ export async function fetchGamesByPlatform() {
     linux,
     n64,
     ps,
+  };
+}
+
+export async function fetchGamesByPlatformSlug(slug, offset) {
+  let platform = await db.platform.findMany({
+    where: {
+      slug: slug,
+    },
+  });
+  platform = platform[0];
+  console.log(platform);
+  if (platform === undefined) {
+    platform = {};
+  }
+  if (!platform.id) {
+    platform.id = "NO_ID";
+  }
+
+  const maxPage = await db.game.findMany({
+    where: {
+      OR: [
+        {
+          platforms: {
+            contains: `[${platform.id},`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` ${platform.id},`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` ${platform.id}]`,
+          },
+        },
+      ],
+    },
+  });
+
+  let game = await db.game.findMany({
+    where: {
+      OR: [
+        {
+          platforms: {
+            contains: `[${platform.id},`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` ${platform.id},`,
+          },
+        },
+        {
+          platforms: {
+            contains: ` ${platform.id}]`,
+          },
+        },
+      ],
+    },
+    take: 10,
+    skip: offset,
+  });
+
+  return {
+    platform: platform,
+    maxPage: Math.ceil(maxPage.length / 10),
+    games: await fetchGameCardData(game.map((item) => item.id)),
   };
 }

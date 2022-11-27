@@ -1,5 +1,6 @@
 import useEmblaCarousel from "embla-carousel-react";
 import Link from "next/link";
+import { useState } from "react";
 import AccentButton from "../Components/AccentButton/AccentButton";
 import Footer from "../Components/Footer/Footer";
 import GameCard from "../Components/GameCard/GameCard";
@@ -10,6 +11,7 @@ import SmallHProduct from "../Components/SmallHProduct/SmallHProduct";
 import {
   fetchGamesByPlatform,
   fetchGenres,
+  fetchPlatforms,
   fetchPopularGames,
 } from "../services/game.server";
 import "../styles/routes/Home.scss";
@@ -25,6 +27,8 @@ export async function getServerSideProps(context) {
     JSON.stringify(await fetchGamesByPlatform())
   );
 
+  const platforms = JSON.parse(JSON.stringify(await fetchPlatforms()));
+
   return {
     props: {
       currentPath: context.req.url,
@@ -32,18 +36,20 @@ export async function getServerSideProps(context) {
       popularGames2,
       genreBased,
       platformBased,
+      platforms,
     },
   };
 }
 
-/** @param {import('next').InferGetServerSidePropsType<typeof getServerSideProps> } props */
 export default function Home({
   popularGames,
   popularGames2,
   genreBased,
   platformBased,
+  platforms,
 }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [viewMorePlatform, setViewMorePlatform] = useState(true);
 
   return (
     <div className="LandingPage">
@@ -139,7 +145,8 @@ export default function Home({
               key={index}
               slug={game.slug}
               game={game.game[0]}
-              GenreType={game.name}
+              GenreType="genre"
+              name={game.name}
             />
           ))}
         </div>
@@ -170,6 +177,32 @@ export default function Home({
               ))}
             </div>
           </section>
+        </div>
+      </section>
+
+      <section className="PlatformSection" id="platform ">
+        <h2>Platforms</h2>
+        <div
+          className="PlatformSection__listing"
+          style={{
+            maxHeight: viewMorePlatform ? "305px" : "",
+            overflow: viewMorePlatform ? "hidden" : "visible",
+          }}
+        >
+          {platforms.map((game, index) => (
+            <GenreBox
+              key={index}
+              slug={game.slug}
+              GenreType="platform"
+              name={game.name}
+            />
+          ))}
+        </div>
+        <div
+          className="PlatformSection__more"
+          onClick={() => setViewMorePlatform(!viewMorePlatform)}
+        >
+          {viewMorePlatform ? <>View More</> : <>View Less</>}
         </div>
       </section>
       <Footer />

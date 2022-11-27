@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import useAuth from "../../hooks/useAuth";
 import AccentButton from "../AccentButton/AccentButton";
@@ -14,11 +15,17 @@ function Header() {
         </div>
         <div className="Header__container--right">
           <ul className="Header__menu">
-            <span data-icon={String.fromCodePoint(59574)} />
+            {/* <span data-icon={String.fromCodePoint(59574)} /> */}
             <li>
-              <a href="/#genre">Genre</a>
+              <Link href="/#genre">
+                <a>Genre</a>
+              </Link>
             </li>
-            <li>Platform</li>
+            <li>
+              <Link href="/#platform">
+                <a>Platform</a>
+              </Link>
+            </li>
           </ul>
           {!user ? (
             <AccentButton isLink={true} href="#login">

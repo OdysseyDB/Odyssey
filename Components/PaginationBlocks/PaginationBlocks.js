@@ -5,11 +5,11 @@ import "./PaginationBlocks.scss";
 function PaginationBlocks({ maxBlocks, currentPage, slug, pageType }) {
   const activeRef = useRef(null);
 
-  useEffect(() => {
-    if (activeRef.current) {
-      activeRef.current.scrollIntoView();
-    }
-  }, [activeRef]);
+  // useEffect(() => {
+  //   if (activeRef.current) {
+  //     activeRef.current.scrollIntoView();
+  //   }
+  // }, [currentPage,activeRef]);
 
   return (
     <div className="PaginationBlocks">

@@ -183,7 +183,8 @@
   }
 
   .PopularSection,
-  .GenreSection {
+  .GenreSection,
+  .PlatformSection {
     @include box(100vw, 580px);
     max-width: 1152px;
     position: relative;
@@ -211,7 +212,8 @@
     }
   }
 
-  .GenreSection {
+  .GenreSection,
+  .PlatformSection {
     @include box(100vw, auto);
 
     &__listing {
@@ -221,6 +223,23 @@
       overflow-x: hidden;
       flex-wrap: wrap;
       padding: 10px;
+    }
+  }
+
+  .PlatformSection {
+    margin-top: 30px;
+
+    &__more {
+      @include box(100%, 40px);
+      @include make-flex();
+      font-size: 17px;
+      font-family: "Poppins", sans-serif;
+      border-radius: 5px;
+      border: 1px solid #aaadbe73;
+      cursor: pointer;
+      &:hover {
+        background-color: #aaadbe73;
+      }
     }
   }
 
