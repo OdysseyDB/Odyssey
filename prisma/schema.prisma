@@ -148,22 +148,23 @@ model Genres {
 }
 
 model Platform {
-  id               String @id @unique
-  alternative_name String @db.VarChar(100)
-  category         String @db.VarChar(100)
-  created_at       String @db.VarChar(100)
-  name             String @db.VarChar(100)
-  platform_logo    String @db.VarChar(100)
-  slug             String @db.VarChar(100)
-  updated_at       String @db.VarChar(100)
-  url              String @db.LongText
-  versions         String @db.VarChar(100)
-  websites         String @db.VarChar(100)
-  checksum         String @db.VarChar(100)
-  generation       String @db.VarChar(100)
-  platform_family  String @db.VarChar(100)
-  abbreviation     String @db.VarChar(100)
-  summary          String @db.LongText
+  id               Int            @id @unique
+  alternative_name String         @db.VarChar(100)
+  category         String         @db.VarChar(100)
+  created_at       String         @db.VarChar(100)
+  name             String         @db.VarChar(100)
+  platform_logo    Int            @default(69420)
+  PlatformLogos    PlatformLogo[]
+  slug             String         @db.VarChar(100)
+  updated_at       String         @db.VarChar(100)
+  url              String         @db.LongText
+  versions         String         @db.VarChar(100)
+  websites         String         @db.VarChar(100)
+  checksum         String         @db.VarChar(100)
+  generation       String         @db.VarChar(100)
+  platform_family  Int            @default(69420)
+  abbreviation     String         @db.VarChar(100)
+  summary          String         @db.LongText
 }
 
 model PlatformCompany {
@@ -188,14 +189,15 @@ model PlatformFamily {
 }
 
 model PlatformLogo {
-  id            Int    @id @unique
-  alpha_channel String @db.VarChar(100)
-  animated      String @db.VarChar(100)
-  height        String @db.VarChar(100)
-  image_id      String @db.VarChar(100)
-  url           String @db.VarChar(100)
-  width         String @db.VarChar(100)
-  checksum      String @db.VarChar(100)
+  id            Int       @id @unique
+  alpha_channel String    @db.VarChar(100)
+  animated      String    @db.VarChar(100)
+  height        String    @db.VarChar(100)
+  image_id      String    @db.VarChar(100)
+  url           String    @db.VarChar(100)
+  width         String    @db.VarChar(100)
+  checksum      String    @db.VarChar(100)
+  Platform      Platform? @relation(fields: [id], references: [id])
 }
 
 model PlatformSite {
@@ -209,6 +211,31 @@ model PlatformSite {
 model PlatformWebsiteEnums {
   value      Int    @id @unique
   websiteSrc String @db.VarChar(100)
+}
+
+model AgeRatingCategory {
+  value         Int             @id @unique
+  rating        String          @db.VarChar(50)
+  age_limit     String          @db.VarChar(10)
+  AgeRatingDesc AgeRatingDesc[]
+}
+
+model AgeRatingDesc {
+  id                Int                @id @unique
+  value             Int
+  category          Int
+  AgeRatingCategory AgeRatingCategory? @relation(fields: [category], references: [value])
+  description       String             @db.VarChar(100)
+  checksum          String             @db.VarChar(100)
+}
+
+model AgeRatings {
+  id                   Int    @id @unique
+  category             Int
+  rating               Int
+  checksum             String @db.VarChar(100)
+  content_descriptions String @db.VarChar(100)
+  synopsis             String @db.LongText
 }
 
 model User {

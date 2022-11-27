@@ -64,6 +64,7 @@ export async function fetchGameCardData(gameIds) {
       CoverImage: true,
       platforms: true,
       created_at: true,
+      age_ratings: true,
     },
   });
 
@@ -92,15 +93,37 @@ export async function fetchGameCardData(gameIds) {
     const platform = await db.platform.findMany({
       where: {
         id: {
-          in: gameItem.platforms.map((item) => JSON.stringify(item)),
+          in: gameItem.platforms.map((item) => item),
         },
+      },
+      include: {
+        PlatformLogos: true,
       },
     });
     delete gameItem.platforms;
 
+    if (gameItem.age_ratings.length === 0) {
+      gameItem.age_ratings = "[]";
+    }
+
+    const ageRatingDesc = await db.ageRatingDesc.findMany({
+      where: {
+        id: {
+          in: eval(gameItem.age_ratings).map((item) => item),
+        },
+      },
+      include: {
+        AgeRatingCategory: true,
+      },
+    });
+    // console.log(ageRatingDesc);
+
+    delete gameItem.age_ratings;
+
     return {
       ...gameItem,
       platform,
+      ageRatingDesc,
       theme,
     };
   });
@@ -209,13 +232,43 @@ export async function fetchGameFromSlug(slug) {
   };
 }
 
-export async function fetchGenreBySlug(slug) {
+export async function fetchGenreBySlug(slug, offset) {
   let genres = await db.genres.findMany({
     where: {
       slug: slug,
     },
   });
   genres = genres[0];
+
+  if (genres === undefined) {
+    genres = {};
+  }
+  if (!genres.id) {
+    genres.id = "NO_ID";
+  }
+
+  const maxPage = await db.game.findMany({
+    where: {
+      OR: [
+        {
+          genres: {
+            contains: `[${genres.id},`,
+          },
+        },
+        {
+          genres: {
+            contains: ` ${genres.id},`,
+          },
+        },
+        {
+          genres: {
+            contains: ` ${genres.id}]`,
+          },
+        },
+      ],
+    },
+  });
+
 
   let game = await db.game.findMany({
     where: {
@@ -238,10 +291,12 @@ export async function fetchGenreBySlug(slug) {
       ],
     },
     take: 10,
+    skip: offset,
   });
 
   return {
     genre: genres,
+    maxPage: Math.floor((maxPage.length)/10),
     games: await fetchGameCardData(game.map((item) => item.id)),
   };
 }

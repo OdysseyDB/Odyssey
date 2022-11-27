@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps, user }) {
       
         <title>Odyssey</title>
         <meta name="description" content="Awesome website for Odyssey" />
-        <link rel="icon" href="ods_logo.png"/>
+        <link rel="icon" href="/ods_logo.png"/>
       </Head>
       <AuthModal />
       <Component {...pageProps} />
