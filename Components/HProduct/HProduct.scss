@@ -1,5 +1,6 @@
 .HProduct {
-  @include box(100%, calc(250px + 26px));
+  @include box(100%, auto);
+  min-height: calc(250px + 26px);
   @include make-flex($dir: row);
   // padding: 13px;
   // padding-bottom: 23px;
@@ -22,9 +23,9 @@
     -moz-animation: LoadingAnimation 1s ease infinite;
     animation: LoadingAnimation 1s ease infinite;
     border-radius: 5px;
-    @include make-flex();
+    @include make-flex($align: flex-start);
     & > div {
-      @include box();
+      @include box($height: calc(250px + 26px));
       border-radius: 5px;
     }
 
@@ -36,7 +37,8 @@
   }
 
   &__right {
-    @include box(calc(100% - 215px));
+    @include box(calc(100% - 215px), auto);
+    min-height: calc(250px + 26px);
     @include make-flex($just: space-between, $align: flex-start);
     gap: 20px;
     padding: 0 40px 0 0;
