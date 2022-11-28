@@ -154,7 +154,6 @@ export async function fetchGameCardData(gameIds) {
         AgeRatingCategory: true,
       },
     });
-    // console.log(ageRatingDesc);
 
     delete gameItem.age_ratings;
 
@@ -268,19 +267,62 @@ export async function fetchGameFromSlug(slug) {
     },
   });
 
+  const ageRatingDesc = await db.ageRatingDesc.findMany({
+    where: {
+      id: {
+        in: eval(game.age_ratings),
+      },
+    },
+    take: 20,
+    include: {
+      AgeRatingCategory: true,
+    },
+  });
+
+  delete game.age_ratings;
+
   delete game.genres;
 
+  if (game.player_perspectives === "") {
+    game.player_perspectives = "[]";
+  }
+
+  const playerPerspective = await db.playerPerspective.findMany({
+    where: {
+      id: {
+        in: eval(game.player_perspectives).map((item) => JSON.stringify(item)),
+      },
+    },
+  });
+
+  const platform = await db.platform.findMany({
+    where: {
+      id: {
+        in: eval(game.platforms).map((item) => item),
+      },
+    },
+    include: {
+      PlatformLogos: true,
+    },
+  });
+  delete game.platforms;
   return {
     ...game,
     theme,
+    platform,
+    ageRatingDesc,
+    playerPerspective,
     genre,
   };
 }
 
 export async function fetchGenreBySlug(slug, offset) {
+  const nSlug = typeof slug === "string" ? [slug] : [...slug];
   let genres = await db.genres.findMany({
     where: {
-      slug: slug,
+      slug: {
+        in: [...slug],
+      },
     },
   });
   genres = genres[0];
@@ -465,7 +507,6 @@ export async function fetchGamesByPlatformSlug(slug, offset) {
     },
   });
   platform = platform[0];
-  console.log(platform);
   if (platform === undefined) {
     platform = {};
   }
