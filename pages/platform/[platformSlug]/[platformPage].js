@@ -29,7 +29,6 @@ export default function PlatformPage({
   platformSlug,
   platformPage,
 }) {
-  console.log(platformData);
   return (
     <div className="PlatformPage">
       <Header />
