@@ -2,7 +2,7 @@ DELIMITER $$
 CREATE PROCEDURE `FetchPlatformGame`(IN platformId varchar(10))
 BEGIN
 SELECT 
-    id, 
+    id , 
     name, 
     slug, 
     rating, 

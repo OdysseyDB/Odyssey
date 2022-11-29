@@ -385,7 +385,18 @@ export async function fetchGenreBySlug(slug, offset) {
   };
 }
 
-// Can replace with just 3 procedures - Done (FetchPlatformGame)
+export async function fetchGamesWithProcedure() {
+  const linuxPro = await db.$queryRaw`call FetchPlatformGame(3)`;
+  const n64Pro = await db.$queryRaw`call FetchPlatformGame(4)`;
+  const psPro = await db.$queryRaw`call FetchPlatformGame(7)`;
+
+  return {
+    linuxPro,
+    n64Pro,
+    psPro,
+  };
+}
+
 export async function fetchGamesByPlatform() {
   let linux = await db.game.findMany({
     where: {

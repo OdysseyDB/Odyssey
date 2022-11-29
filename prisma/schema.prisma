@@ -297,7 +297,7 @@ model CompanySiteEnum {
 
 model UserFollows {
   id     String @id @default(uuid())
-  userId String @unique @db.VarChar(100)
+  userId String @db.VarChar(100)
   User   User?  @relation(fields: [userId], references: [id])
-  gameId String @unique @db.VarChar(100)
+  gameId String @db.VarChar(100)
 }
