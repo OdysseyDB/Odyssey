@@ -576,3 +576,17 @@ export async function fetchGamesByPlatformSlug(slug, offset) {
     games: await fetchGameCardData(game.map((item) => item.id)),
   };
 }
+
+
+export async function fetchGamesFollowedByUser (userId){
+  const userFollowedGame = await db.userFollows.findMany({
+    where:{
+      userId: userId
+    },
+    select:{
+      gameId: true
+    }
+  })
+
+  return await fetchGameCardData(userFollowedGame.map((item) => item.gameId))
+}
