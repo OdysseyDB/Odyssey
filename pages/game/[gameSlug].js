@@ -1,10 +1,15 @@
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import AccentButton from "../../Components/AccentButton/AccentButton";
 import Footer from "../../Components/Footer/Footer";
 import GameCard from "../../Components/GameCard/GameCard";
 import Header from "../../Components/Header/Header";
 import HorizontalScroll from "../../Components/HorizontalScroll/HorizontalScroll";
+import useAuth from "../../hooks/useAuth";
+import {
+  followGameFetch,
+  unFollowGameFetch,
+} from "../../operations/user.fetch";
 
 import {
   fetchGameFromSlug,
@@ -32,7 +37,30 @@ export async function getServerSideProps(context) {
 }
 
 export default function GamePage({ gameData, genreData }) {
-  console.log(gameData);
+  const { user, setUser } = useAuth();
+  let isFollowedGameId;
+  const [localGameData, setLocalGameData] = useState(gameData);
+
+  const [isUserFollowingGame, setIsUserFollowingGame] = useState(
+    user
+      ? user.UserFollows.map((item) => item.gameId).includes(gameData.id)
+      : false
+  );
+
+  useEffect(() => {
+    if (user) {
+      isFollowedGameId = user.UserFollows.filter(
+        (item) => item.gameId === gameData.id
+      );
+
+      if (isFollowedGameId.length > 0) {
+        isFollowedGameId = isFollowedGameId[0].id;
+      } else {
+        isFollowedGameId = "69420";
+      }
+    }
+  }, [user]);
+
   return (
     <div className="GamePage">
       <Header />
@@ -56,15 +84,61 @@ export default function GamePage({ gameData, genreData }) {
                 "t_cover_big"
               )}`}
             />
-            <AccentButton
-              style={{
-                borderRadius: "4px",
-              }}
-            >
-              Add to Library
-            </AccentButton>
-            {gameData.follows && (
-              <span>{Number(gameData.follows)} people have added this!</span>
+            {isUserFollowingGame ? (
+              <AccentButton
+                style={{
+                  borderRadius: "4px",
+                }}
+                onClick={async () => {
+                  if (!user) {
+                    window.location.hash = "#login";
+                    return;
+                  }
+                  const response = await unFollowGameFetch({
+                    id: isFollowedGameId,
+                    email: user.email,
+                    gameSlug: gameData.slug,
+                  });
+                  if (response.status === 200) {
+                    setIsUserFollowingGame(false);
+                    setUser(response.user);
+                    setLocalGameData(response.gameData);
+                  }
+                }}
+              >
+                Remove from Library
+              </AccentButton>
+            ) : (
+              <AccentButton
+                style={{
+                  borderRadius: "4px",
+                  backgroundColor: "lightgreen",
+                  color: "black",
+                }}
+                onClick={async () => {
+                  if (!user) {
+                    window.location.hash = "#login";
+                    return;
+                  }
+                  const response = await followGameFetch({
+                    userId: user.id,
+                    gameId: gameData.id,
+                    email: user.email,
+                    gameSlug: gameData.slug,
+                  });
+
+                  if (response.status === 200) {
+                    setIsUserFollowingGame(true);
+                    setUser(response.user);
+                    setLocalGameData(response.gameData);
+                  }
+                }}
+              >
+                Add to Library
+              </AccentButton>
+            )}
+            {localGameData.follows && (
+              <span>{localGameData.follows} people have added this!</span>
             )}
           </div>
           <div className="GamePage__stage--right">

@@ -38,7 +38,7 @@ model Game {
   status                  String       @db.VarChar(255)
   aggregated_rating       String       @db.VarChar(255)
   aggregated_rating_count String       @db.VarChar(255)
-  follows                 String       @db.VarChar(255)
+  follows                 Int
   franchise               String       @db.VarChar(255)
   franchises              String       @db.VarChar(255)
   rating                  String       @db.VarChar(255)
@@ -249,10 +249,11 @@ model AgeRatings {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String @unique @db.VarChar(100)
-  email    String @unique @db.VarChar(100)
-  password String @db.VarChar(250)
+  id          String        @id @default(uuid())
+  name        String        @unique @db.VarChar(100)
+  email       String        @unique @db.VarChar(100)
+  password    String        @db.VarChar(250)
+  UserFollows UserFollows[]
 }
 
 model Company {
@@ -293,3 +294,10 @@ model CompanySiteEnum {
 // generator erd {
 //   provider = "prisma-erd-generator"
 // }
+
+model UserFollows {
+  id     String @id @default(uuid())
+  userId String @unique @db.VarChar(100)
+  User   User?  @relation(fields: [userId], references: [id])
+  gameId String @unique @db.VarChar(100)
+}

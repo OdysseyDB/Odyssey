@@ -1,9 +1,26 @@
 import db from "../lib/prisma";
 
+export async function userFollowGame(data) {
+  return db.userFollows.create({
+    data,
+  });
+}
+
+export async function userUnFollowGame(data) {
+  return db.userFollows.delete({
+    where: {
+      id: data.id,
+    },
+  });
+}
+
 export async function fetchUser(email) {
   return db.user.findUnique({
     where: {
       email,
+    },
+    include: {
+      UserFollows: true,
     },
   });
 }

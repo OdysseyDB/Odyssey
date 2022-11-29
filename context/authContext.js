@@ -54,6 +54,7 @@ export function AuthProvider({ children, ssrUser, ...props }) {
     user,
     login,
     logout,
+    setUser,
     ...props,
   };
 

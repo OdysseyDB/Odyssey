@@ -169,8 +169,6 @@ export async function fetchGameCardData(gameIds) {
 }
 
 export async function fetchPopularGames(count = 10, skip = 10) {
-  // convert sql to prisma
-  // select name, rating from Game order by rating DESC limit 10;
   const game = await db.game.findMany({
     orderBy: {
       rating: "desc",
@@ -321,7 +319,7 @@ export async function fetchGenreBySlug(slug, offset) {
   let genres = await db.genres.findMany({
     where: {
       slug: {
-        in: [...slug],
+        in: [...nSlug],
       },
     },
   });
@@ -387,6 +385,7 @@ export async function fetchGenreBySlug(slug, offset) {
   };
 }
 
+// Can replace with just 3 procedures - Done (FetchPlatformGame)
 export async function fetchGamesByPlatform() {
   let linux = await db.game.findMany({
     where: {
@@ -500,6 +499,7 @@ export async function fetchGamesByPlatform() {
   };
 }
 
+// can replace max page with a procedure - Done (GetMaxPagesForPlatform)
 export async function fetchGamesByPlatformSlug(slug, offset) {
   let platform = await db.platform.findMany({
     where: {
@@ -513,7 +513,6 @@ export async function fetchGamesByPlatformSlug(slug, offset) {
   if (!platform.id) {
     platform.id = "NO_ID";
   }
-
   const maxPage = await db.game.findMany({
     where: {
       OR: [
